@@ -215,41 +215,73 @@ class PluginTest(unittest.TestCase):
             self.assertTrue(found)
 
     @parameterized.expand([
-        (True,  1, 1,    False, True,  True),
-        (True,  1, 2,    False, True,  True),
-        (True,  1, 1,    True,  True,  True),
-        (True,  1, 2,    True,  True,  True),
-        (True,  1, None, None,  True,  True),
-        (True,  1, 1,    None,  True,  True),
-        (True,  1, None, True,  True,  True),
-        (True,  1, None, False, True,  True),
-        (False, 1, 1,    False, True,  True),
-        (False, 1, 2,    False, True,  False),
-        (False, 1, 1,    True,  True,  True),
-        (False, 1, 2,    True,  True,  True),
-        (False, 1, None, None,  True,  False),
-        (False, 1, 1,    None,  True,  True),
-        (False, 1, None, True,  True,  True),
-        (False, 1, None, False, True,  False),
-        (True,  1, 1,    False, False, False),
-        (True,  1, 2,    False, False, False),
-        (True,  1, 1,    True,  False, False),
-        (True,  1, 2,    True,  False, False),
-        (True,  1, None, None,  False, False),
-        (True,  1, 1,    None,  False, False),
-        (True,  1, None, True,  False, False),
-        (True,  1, None, False, False, False),
-        (False, 1, 1,    False, False, False),
-        (False, 1, 2,    False, False, False),
-        (False, 1, 1,    True,  False, False),
-        (False, 1, 2,    True,  False, False),
-        (False, 1, None, None,  False, False),
-        (False, 1, 1,    None,  False, False),
-        (False, 1, None, True,  False, False),
-        (False, 1, None, False, False, False),
+        (True,  1, 1,    False, True,  True, [{'id': 1}, {'id': 2}], True),
+        (True,  1, 2,    False, True,  True, [{'id': 1}, {'id': 2}], True),
+        (True,  1, 1,    True,  True,  True, [{'id': 1}, {'id': 2}], True),
+        (True,  1, 2,    True,  True,  True, [{'id': 1}, {'id': 2}], True),
+        (True,  1, None, None,  True,  True, [{'id': 1}, {'id': 2}], True),
+        (True,  1, 1,    None,  True,  True, [{'id': 1}, {'id': 2}], True),
+        (True,  1, None, True,  True,  True, [{'id': 1}, {'id': 2}], True),
+        (True,  1, None, False, True,  True, [{'id': 1}, {'id': 2}], True),
+        (False, 1, 1,    False, True,  True, [{'id': 1}, {'id': 2}], True),
+        (False, 1, 2,    False, True,  False, [{'id': 1}, {'id': 2}], True),
+        (False, 1, 1,    True,  True,  True, [{'id': 1}, {'id': 2}], True),
+        (False, 1, 2,    True,  True,  True, [{'id': 1}, {'id': 2}], True),
+        (False, 1, None, None,  True,  False, [{'id': 1}, {'id': 2}], True),
+        (False, 1, 1,    None,  True,  True, [{'id': 1}, {'id': 2}], True),
+        (False, 1, None, True,  True,  True, [{'id': 1}, {'id': 2}], True),
+        (False, 1, None, False, True,  False, [{'id': 1}, {'id': 2}], True),
+        (True,  1, 1,    False, False, False, [{'id': 1}, {'id': 2}], True),
+        (True,  1, 2,    False, False, False, [{'id': 1}, {'id': 2}], True),
+        (True,  1, 1,    True,  False, False, [{'id': 1}, {'id': 2}], True),
+        (True,  1, 2,    True,  False, False, [{'id': 1}, {'id': 2}], True),
+        (True,  1, None, None,  False, False, [{'id': 1}, {'id': 2}], True),
+        (True,  1, 1,    None,  False, False, [{'id': 1}, {'id': 2}], True),
+        (True,  1, None, True,  False, False, [{'id': 1}, {'id': 2}], True),
+        (True,  1, None, False, False, False, [{'id': 1}, {'id': 2}], True),
+        (False, 1, 1,    False, False, False, [{'id': 1}, {'id': 2}], True),
+        (False, 1, 2,    False, False, False, [{'id': 1}, {'id': 2}], True),
+        (False, 1, 1,    True,  False, False, [{'id': 1}, {'id': 2}], True),
+        (False, 1, 2,    True,  False, False, [{'id': 1}, {'id': 2}], True),
+        (False, 1, None, None,  False, False, [{'id': 1}, {'id': 2}], True),
+        (False, 1, 1,    None,  False, False, [{'id': 1}, {'id': 2}], True),
+        (False, 1, None, True,  False, False, [{'id': 1}, {'id': 2}], True),
+        (False, 1, None, False, False, False, [{'id': 1}, {'id': 2}], True),
+        (True, 1, 1, False, True, True, [{}, {}], False),
+        (True, 1, 2, False, True, True, [{}, {}], False),
+        (True, 1, 1, True, True, True, [{}, {}], False),
+        (True, 1, 2, True, True, True, [{}, {}], False),
+        (True, 1, None, None, True, True, [{}, {}], False),
+        (True, 1, 1, None, True, True, [{}, {}], False),
+        (True, 1, None, True, True, True, [{}, {}], False),
+        (True, 1, None, False, True, True, [{}, {}], False),
+        (False, 1, 1, False, True, True, [{}, {}], False),
+        (False, 1, 2, False, True, False, [{}, {}], False),
+        (False, 1, 1, True, True, True, [{}, {}], False),
+        (False, 1, 2, True, True, True, [{}, {}], False),
+        (False, 1, None, None, True, False, [{}, {}]),
+        (False, 1, 1, None, True, True, [{}, {}], False),
+        (False, 1, None, True, True, True, [{}, {}], False),
+        (False, 1, None, False, True, False, [{}, {}], False),
+        (True, 1, 1, False, False, False, [{}, {}], False),
+        (True, 1, 2, False, False, False, [{}, {}], False),
+        (True, 1, 1, True, False, False, [{}, {}], False),
+        (True, 1, 2, True, False, False, [{}, {}], False),
+        (True, 1, None, None, False, False, [{}, {}], False),
+        (True, 1, 1, None, False, False, [{}, {}], False),
+        (True, 1, None, True, False, False, [{}, {}], False),
+        (True, 1, None, False, False, False, [{}, {}], False),
+        (False, 1, 1, False, False, False, [{}, {}], False),
+        (False, 1, 2, False, False, False, [{}, {}], False),
+        (False, 1, 1, True, False, False, [{}, {}], False),
+        (False, 1, 2, True, False, False, [{}, {}], False),
+        (False, 1, None, None, False, False, [{}, {}], False),
+        (False, 1, 1, None, False, False, [{}, {}], False),
+        (False, 1, None, True, False, False, [{}, {}], False),
+        (False, 1, None, False, False, False, [{}, {}], False),
     ])
-    def test_packagecontroller_after_show(self, update_via_api, creator_id, user_id, sysadmin, private, fields_expected):
-        
+    def test_packagecontroller_after_show(self, update_via_api, creator_id, user_id, sysadmin, private, fields_expected, resources, resources_fields):
+
         context = {'updating_via_cb': update_via_api}
 
         if creator_id is not None or sysadmin is not None:
@@ -258,7 +290,7 @@ class PluginTest(unittest.TestCase):
             user.sysadmin = sysadmin
             context['auth_user_obj'] = user
 
-        pkg_dict = {'creator_user_id': creator_id, 'allowed_users': ['a', 'b', 'c'], 'searchable': True, 'acquire_url': 'http://google.es', 'private': private}
+        pkg_dict = {'creator_user_id': creator_id, 'allowed_users': ['a', 'b', 'c'], 'searchable': True, 'acquire_url': 'http://google.es', 'private': private, 'resources': resources, 'num_resources': 2}
 
         # Call the function
         result = self.privateDatasets.after_show(context, pkg_dict)    # Call the function
@@ -270,6 +302,14 @@ class PluginTest(unittest.TestCase):
                 self.assertTrue(field in result)
             else:
                 self.assertFalse(field in result)
+
+        fields = ['resources', 'num_resources']
+        for field in fields:
+            if resources_fields:
+                self.assertTrue(field in result)
+            else:
+                self.assertFalse(field in result)
+
 
     @parameterized.expand([
         ('public',  None,    'public'),
