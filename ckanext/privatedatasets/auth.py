@@ -45,12 +45,17 @@ def package_show(context, data_dict):
 
             acquired = False
 
-            # Init the model
-            db.init_db(context['model'])
+            if package.owner_org:
+                acquired = authz.has_user_permission_for_group_or_org(
+                    package.owner_org, user, 'read')
 
-            # Branch not executed if the database return an empty list
-            if db.AllowedUser.get(package_id=package.id, user_name=user):
-                acquired = True
+            if not acquired:
+                # Init the model
+                db.init_db(context['model'])
+
+                # Branch not executed if the database return an empty list
+                if db.AllowedUser.get(package_id=package.id, user_name=user):
+                    acquired = True
 
             if not acquired:
 
@@ -65,7 +70,6 @@ def package_show(context, data_dict):
                     helpers.flash_notice(_('This private dataset can be acquired. To do so, please click ' +
                                            '<a target="_blank" href="%s">here</a>') % package.extras['acquire_url'],
                                          allow_html=True)
-
 
         return {'success': True}
     else:
@@ -97,13 +101,15 @@ def package_update(context, data_dict):
 @tk.auth_allow_anonymous_access
 def resource_show(context, data_dict):
 
-    _model = context['model']
     user = context.get('user')
     user_obj = context.get('auth_user_obj')
     resource = logic_auth.get_resource_object(context, data_dict)
     # check authentication against package
-    package = _model.Package.get(resource.package_id)
-
+    package_dict = {'id': resource.package_id}
+    package = logic_auth.get_package_object(context, package_dict)
+    # ipdb.set_trace()
+    print package
+    print package_dict
     if not package:
         raise tk.ObjectNotFound(_('No package found for this resource, cannot check auth.'))
 
@@ -133,7 +139,6 @@ def resource_show(context, data_dict):
                 authorized = True
 
         if not authorized:
-
             return {'success': False, 'msg': _('User %s not authorized to read resource %s') % (user, resource.id)}
 
         else:

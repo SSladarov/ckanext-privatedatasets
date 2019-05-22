@@ -362,20 +362,20 @@ class PrivateDatasets(p.SingletonPlugin, tk.DefaultDatasetForm, DefaultPermissio
     def before_create(self, context, resource):
         pass
 
-    def after_create(self, context, resource):
-        return resource
+   #def after_create(self, context, resource):
+   #    return resource
 
     def before_update(self, context, current, resource):
         return resource
 
-    def after_update(self, context, resource):
-        return resource
+    #def after_update(self, context, resource):
+    #    return resource
 
     def before_delete(self, context, resource, resources):
         return resource
 
-    def after_delete(self, context, resources):
-        return resources
+    #def after_delete(self, context, resources):
+    #    return resources
 
     def before_show(self, resource_dict):
 
