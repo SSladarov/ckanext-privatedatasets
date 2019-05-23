@@ -362,19 +362,19 @@ class PrivateDatasets(p.SingletonPlugin, tk.DefaultDatasetForm, DefaultPermissio
     def before_create(self, context, resource):
         pass
 
-   #def after_create(self, context, resource):
+   #def after_create(self, context, resource): #Coincide el nombre con el de IPackageController
    #    return resource
 
     def before_update(self, context, current, resource):
-        return resource
+        pass
 
-    #def after_update(self, context, resource):
+    #def after_update(self, context, resource): #Coincide el nombre con el de IPackageController
     #    return resource
 
     def before_delete(self, context, resource, resources):
-        return resource
+        pass
 
-    #def after_delete(self, context, resources):
+    #def after_delete(self, context, resources): #Coincide el nombre con el de IPackageController
     #    return resources
 
     def before_show(self, resource_dict):
