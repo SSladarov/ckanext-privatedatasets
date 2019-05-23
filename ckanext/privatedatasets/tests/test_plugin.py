@@ -487,3 +487,40 @@ class PluginTest(unittest.TestCase):
 
         self.assertEquals(final_search_results['facets'], search_results['facets'])
         self.assertEquals(final_search_results['elements'], search_results['elements'])
+
+    @parameterized.expand([
+        (True,),
+        (False,)
+    ])
+    def test_package_controller_before_view(self, user_allowed):
+
+        pkg_dict = {'resources': [{'id': 1}, {'id': 2}, {'id': 3}]}
+        pkg_dict_not_allowed = {'resources': []}
+
+        plugin.tk.check_access.side_effect = None if user_allowed else plugin.tk.NotAuthorized
+
+        result = self.privateDatasets.before_view(pkg_dict)
+
+        if user_allowed:
+            self.assertEquals(result['resources'], pkg_dict['resources'])
+        else:
+            self.assertEquals(result['resources'], pkg_dict_not_allowed['resources'])
+
+    @parameterized.expand([
+        (True,),
+        (False,)
+    ])
+    def test_resource_controller_before_show(self, user_allowed):
+
+        resource_dict = {'id': 1, 'resource_name': 'resource_test'}
+
+        plugin.tk.check_access.side_effect = None if user_allowed else plugin.tk.NotAuthorized
+
+        result = self.privateDatasets.before_show(resource_dict)
+
+        if user_allowed:
+            self.assertEquals(result['id'], resource_dict['id'])
+            self.assertEquals(result['resource_name'], resource_dict['resource_name'])
+        else:
+            self.assertNotIn('id', result)
+            self.assertNotIn('resource_name', result)
