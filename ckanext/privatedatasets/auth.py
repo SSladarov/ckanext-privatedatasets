@@ -107,9 +107,6 @@ def resource_show(context, data_dict):
     # check authentication against package
     package_dict = {'id': resource.package_id}
     package = logic_auth.get_package_object(context, package_dict)
-    # ipdb.set_trace()
-    print package
-    print package_dict
     if not package:
         raise tk.ObjectNotFound(_('No package found for this resource, cannot check auth.'))
 

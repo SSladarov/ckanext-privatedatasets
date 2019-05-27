@@ -268,9 +268,12 @@ class TestSelenium(unittest.TestCase):
 
         # Access the dataset
         driver.get(self.base_url + 'dataset/' + dataset_url)
+
         if not acquired and private and not in_org:
-            # If the user has not access to the dataset the 404 error page is displayed
-            self.check_ds_values(dataset_url, dataset['private'], dataset['searchable'], dataset['allowed_users'], acquire_url)
+            # If the dataset is private and the user hasnt access to the resources, the field resources dont appear
+
+            self.assertEquals('This dataset has no data', driver.find_element_by_class_name('empty').get_attribute('value'))
+            self.assertEqual(self.base_url + 'dataset/%s' % dataset_url, driver.current_url)
 
         else:
             self.assertEqual(self.base_url + 'dataset/%s' % dataset_url, driver.current_url)
