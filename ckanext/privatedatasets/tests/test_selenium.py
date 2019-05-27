@@ -272,7 +272,7 @@ class TestSelenium(unittest.TestCase):
         if not acquired and private and not in_org:
             # If the dataset is private and the user hasnt access to the resources, the field resources dont appear
 
-            self.assertEquals('This dataset has no data', driver.find_element_by_class_name('empty').get_attribute('value'))
+            self.assertEquals('empty', driver.find_element_by_class_name('empty').get_attribute('class'))
             self.assertEqual(self.base_url + 'dataset/%s' % dataset_url, driver.current_url)
 
         else:
