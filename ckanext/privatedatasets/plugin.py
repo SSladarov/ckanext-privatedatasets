@@ -120,11 +120,6 @@ class PrivateDatasets(p.SingletonPlugin, tk.DefaultDatasetForm, DefaultPermissio
                           constants.ACQUISITIONS_LIST: auth.acquisitions_list,
                           constants.PACKAGE_DELETED: auth.revoke_access}
 
-        # resource_show is not required in CKAN 2.3 because it delegates to
-        # package_show
-        if not tk.check_ckan_version(min_version='2.3'):
-            auth_functions['resource_show'] = auth.resource_show
-
         return auth_functions
 
     ######################################################################
@@ -404,29 +399,4 @@ class PrivateDatasets(p.SingletonPlugin, tk.DefaultDatasetForm, DefaultPermissio
                 'show_acquire_url_on_create': helpers.show_acquire_url_on_create,
                 'show_acquire_url_on_edit': helpers.show_acquire_url_on_edit,
                 'acquire_button': helpers.acquire_button
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 }
