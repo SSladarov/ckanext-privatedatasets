@@ -65,17 +65,13 @@ class PluginTest(unittest.TestCase):
         ('package_show',      plugin.auth.package_show),
         ('package_update',    plugin.auth.package_update),
         ('resource_show',     plugin.auth.resource_show),
-        ('resource_show',     plugin.auth.resource_show,     True),
         ('package_acquired',  plugin.auth.package_acquired),
         ('acquisitions_list', plugin.auth.acquisitions_list),
         ('revoke_access',   plugin.auth.revoke_access)
     ])
-    def test_auth_function(self, function_name, expected_function, is_ckan_23=False):
-        plugin.tk.check_ckan_version = MagicMock(return_value=is_ckan_23)
+    def test_auth_function(self, function_name, expected_function):
         auth_functions = self.privateDatasets.get_auth_functions()
-
         self.assertEquals(auth_functions[function_name], expected_function)
-
 
     def test_update_config(self):
         # Call the method

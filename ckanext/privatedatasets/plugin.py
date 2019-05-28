@@ -30,7 +30,6 @@ from ckanext.privatedatasets import auth, actions, constants, converters_validat
 from ckanext.privatedatasets.views import acquired_datasets
 
 
-
 HIDDEN_FIELDS = [constants.ALLOWED_USERS, constants.SEARCHABLE]
 
 
@@ -166,8 +165,6 @@ class PrivateDatasets(p.SingletonPlugin, tk.DefaultDatasetForm, DefaultPermissio
 
         return action_functions
 
-
-
     ######################################################################
     ######################### IPACKAGECONTROLLER #########################
     ######################################################################
@@ -186,9 +183,6 @@ class PrivateDatasets(p.SingletonPlugin, tk.DefaultDatasetForm, DefaultPermissio
                 pkg_dict['capacity'] = 'public'
 
         return pkg_dict
-
-
-
 
     def after_create(self, context, pkg_dict):
         session = context['session']
@@ -331,7 +325,6 @@ class PrivateDatasets(p.SingletonPlugin, tk.DefaultDatasetForm, DefaultPermissio
                 pkg_dict = self.before_view(pkg_dict)
         return pkg_dict
 
-
     def get_dataset_labels(self, dataset_obj):
         labels = super(PrivateDatasets, self).get_dataset_labels(
             dataset_obj)
@@ -348,29 +341,18 @@ class PrivateDatasets(p.SingletonPlugin, tk.DefaultDatasetForm, DefaultPermissio
         labels.append('searchable')
         return labels
 
-
     ######################################################################
     ######################### IRESOURCECONTROLLER ########################
     ######################################################################
 
-
     def before_create(self, context, resource):
         pass
-
-   #def after_create(self, context, resource): #Coincide el nombre con el de IPackageController
-   #    return resource
 
     def before_update(self, context, current, resource):
         pass
 
-    #def after_update(self, context, resource): #Coincide el nombre con el de IPackageController
-    #    return resource
-
     def before_delete(self, context, resource, resources):
         pass
-
-    #def after_delete(self, context, resources): #Coincide el nombre con el de IPackageController
-    #    return resources
 
     def before_show(self, resource_dict):
 
