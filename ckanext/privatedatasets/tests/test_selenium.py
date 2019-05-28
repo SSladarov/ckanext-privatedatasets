@@ -276,6 +276,7 @@ class TestSelenium(unittest.TestCase):
             self.assertEqual(self.base_url + 'dataset/%s' % dataset_url, driver.current_url)
 
         else:
+            self.assertEquals('resource-list', driver.find_element_by_class_name('resource-list').get_attribute('class'))
             self.assertEqual(self.base_url + 'dataset/%s' % dataset_url, driver.current_url)
 
     def check_acquired(self, dataset, dataset_url, acquired, private):
